@@ -17,8 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Service("catalogService")
 public class CatalogServiceImpl implements CatalogService {
@@ -84,8 +82,6 @@ public class CatalogServiceImpl implements CatalogService {
         String [] temp = product.getDescription().split("\"");
         itemVO.setDescriptionImage(temp[1]);
         itemVO.setDescriptionText(temp[2].substring(1));
-//        itemVO.setDescriptionImage(extractFileName(product.getDescription()));
-//        itemVO.setDescriptionText(product.getDescriptionn());
 
         itemVO.setListPrice(item.getListPrice());
         itemVO.setAttributes(item.getAttribute1());
@@ -94,14 +90,4 @@ public class CatalogServiceImpl implements CatalogService {
         return itemVO;
     }
 
-//    private String extractFileName(String imagePath) {
-//        Pattern pattern = Pattern.compile("src=\"([^\"]+)\"");
-//        Matcher matcher = pattern.matcher(imagePath);
-//
-//        if (matcher.find()) {
-//            String fullPath = matcher.group(1);
-//            return fullPath.substring(fullPath.lastIndexOf('/') + 1);
-//        }
-//        return null;
-//    }
 }

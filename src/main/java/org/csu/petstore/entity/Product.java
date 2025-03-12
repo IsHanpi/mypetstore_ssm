@@ -13,6 +13,4 @@ public class Product {
     private String name;
     @TableField("descn")
     private String description;
-//    @TableField("descnn")
-//    private String descriptionn;
 }
