@@ -8,7 +8,7 @@
 <body>
 <header th:replace="common/top"></header>
 <div id="Content">
-    <p th:text="${msg}">Error Message</p>
+    <p style="color: red" th:text="${session.ErrorMessage}">Error Message</p>
 </div>
 <footer th:replace="common/bottom"></footer>
 </body>
