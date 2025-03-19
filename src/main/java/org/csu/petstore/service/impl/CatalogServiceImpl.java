@@ -90,4 +90,16 @@ public class CatalogServiceImpl implements CatalogService {
         return itemVO;
     }
 
+    @Override
+    public List<Product> searchProductList(String keyword) {
+        QueryWrapper<Product> queryWrapper = new QueryWrapper<>();
+        queryWrapper.like("name", keyword);
+        List<Product> productList = productMapper.selectList(queryWrapper);
+        for (Product product : productList) {
+            String sub1 = product.getDescription().substring(0,12);
+            product.setDescription(sub1 + "../"+product.getDescription().substring(12));
+        }
+        return productList;
+    }
+
 }
