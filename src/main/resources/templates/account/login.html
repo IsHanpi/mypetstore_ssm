@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+</head>
+
+<body>
+<header th:replace="common/top"></header>
+
+
+<link href="../css/signOn.css?v=1.0.1" rel="stylesheet" type="text/css">
+<div id="Content">
+<form action="/account/signon" class="box" method="post">
+    <p>Please enter your username and password.</p>
+
+    <p><font color="red" th:if="${signOnMsg !=null}" th:text="${signOnMsg}"> signOnMsg</font></p>
+
+    <p>
+        <input name="username" placeholder="Username" id="username" type="text"/>
+        <input name="password" placeholder="Password" id="password" type="password"/>
+    </p>
+    VerificationCode:<input maxlength="4" name="vCode" size="5" type="text"/>
+    <a href="/account/viewLoginForm"><img border="0" name="checkcode" src="verification"></a>
+    </br>
+    <input type="submit" value="Login"></br>
+    <a href="/catalog/index">Back</a>
+</form>
+<div class="extractBox">
+    Need a username and password?
+    <a href="/account/viewRegisterForm">Register Now!</a>
+</div>
+</div>
+<footer th:replace="common/bottom"></footer>
+</body>
+</html>
