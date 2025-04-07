@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>newOrder</title>
+    <link href="../css/jpetstore.css" media="screen" rel="stylesheet" type="text/css">
+</head>
+<body>
+<header th:replace="common/top.html"></header>
+<div id="Content">
+<div id="Catalog">
+    <form action="/order/confirmOrder" method="post">
+        <table>
+            <tr>
+                <th colspan=2>Payment Details</th>
+            </tr>
+            <tr>
+                <td>Card Type:</td>
+                <td>
+                    <select name="cartType">
+                        <option value="Visa" selected="selected">Visa</option>
+                        <option value="MasterCard">MasterCard</option>
+                        <option value="American Express">American Express</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td>Card Number:</td>
+                <td>
+                    <label>
+                        <input type="text" name="creditCard" th:value="${session.order.creditCard}">
+                    </label>* Use a fake number!
+                    * Use a fake
+                    number!</td>
+            </tr>
+            <tr>
+                <td>Expiry Date (MM/YYYY):</td>
+                <td>
+                    <label>
+                        <input type="text" name="expiryDate" th:value="${session.order.expiryDate}"/>
+                    </label>
+            </tr>
+            <tr>
+                <th colspan=2>Billing Address</th>
+            </tr>
+            <tr>
+                <td>First name:</td>
+                <td>
+                    <label>
+                        <input type="text" name="billToFirstName" th:value="${session.order.billToFirstName}"/>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>Last name:</td>
+                <td>
+                    <label>
+                        <input type="text" name="billToLastName" th:value="${session.order.billToLastName}"/>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>Address 1:</td>
+                <td>
+                    <label>
+                        <input type="text" size="40" name="billAddress1" th:value="${session.order.billAddress1}"/>
+                    </label>
+                </td>
+            </tr>
+            <tr>
+                <td>Address 2:</td>
+                <td><label>
+                    <input type="text" size="40" name="billAddress2" th:value="${session.order.billAddress2}"/>
+                </label></td>
+            </tr>
+            <tr>
+                <td>City:</td>
+                <td><label>
+                    <input type="text" name="billCity" th:value="${session.order.billCity}" />
+                </label></td>
+            </tr>
+            <tr>
+                <td>State:</td>
+                <td><label>
+                    <input type="text" size="4" name="billState" th:value="${session.order.billState}"/>
+                </label></td>
+            </tr>
+            <tr>
+                <td>Zip:</td>
+                <td><label>
+                    <input type="text" size="10" name="billZip" th:value="${session.order.billZip}" />
+                </label></td>
+            </tr>
+            <tr>
+                <td>Country:</td>
+                <td><label>
+                    <input type="text" size="15" name="billCountry" th:value="${session.order.billCountry}">
+                </label></td>
+            </tr>
+            <tr>
+                <td colspan=2>
+                    <label>
+                        <input type="checkbox" name="shippingAddressRequired" id="shippingAddressRequired">
+                    </label>
+                    Ship to different address...</td>
+            </tr>
+            <tr class="shippingContent">
+                <th colspan=2>Shipping Address</th>
+            </tr>
+            <tr class="shippingContent">
+                <td>First name:</td>
+                <td><label>
+                    <input type="text" name="shipToFirstName" />
+                </label></td>
+            </tr>
+            <tr class="shippingContent">
+                <td>Last name:</td>
+                <td><label>
+                    <input type="text" name="shipToLastName" />
+                </label></td>
+            </tr>
+            <tr class="shippingContent">
+                <td>Address 1:</td>
+                <td><label>
+                    <input type="text" name="shipAddress1" />
+                </label></td>
+            </tr>
+            <tr class="shippingContent">
+                <td>Address 2:</td>
+                <td><label>
+                    <input type="text" name="shipAddress2" />
+                </label></td>
+            </tr>
+            <tr class="shippingContent">
+                <td>City:</td>
+                <td><label>
+                    <input type="text" name="shipCity" />
+                </label></td>
+            </tr>
+            <tr class="shippingContent">
+                <td>State:</td>
+                <td><label>
+                    <input type="text" name="shipState" />
+                </label></td>
+            </tr>
+            <tr class="shippingContent">
+                <td>Zip:</td>
+                <td><label>
+                    <input type="text" name="shipZip" />
+                </label></td>
+            </tr>
+            <tr class="shippingContent">
+                <td>Country:</td>
+                <td><label>
+                    <input type="text" name="shipCountry"/>
+                </label></td>
+            </tr>
+        </table>
+        <input type="submit" name="newOrder" value="Continue">
+    </form>
+</div>
+</div>
+<footer th:replace="common/bottom"></footer>
+<script>
+    $(function () {
+        console.log('ok-s');
+        $(document).on('click',function (){
+            let shippingRequired = document.getElementById('shippingAddressRequired');
+            if(shippingRequired.checked) {
+                $('.shippingContent').show();
+            }
+            else $('.shippingContent').hide();
+        });
+    });
+</script>
+</body>
+</html>

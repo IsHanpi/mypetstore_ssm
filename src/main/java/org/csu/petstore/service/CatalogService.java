@@ -15,4 +15,6 @@ public interface CatalogService {
     public ItemVO getItem(String itemId);
 
     List<Product> searchProductList(String keyword);
+
+    List<Product> getProductList(String categoryId);
 }

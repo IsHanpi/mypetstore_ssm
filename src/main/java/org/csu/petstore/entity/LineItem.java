@@ -23,13 +23,6 @@ public class LineItem {
     @TableField(exist = false)
     private BigDecimal total;
     public LineItem() {}
-    public LineItem(int lineNum,CartItem cartItem){
-        this.lineNum = lineNum;
-        this.quantity = cartItem.getQuantity();
-        this.itemId = cartItem.getItem().getItemId();
-        this.unitPrice = cartItem.getItem().getListPrice();
-        this.item = cartItem.getItem();
-    }
     public void setItem(Item item) {
         this.item = item;
         calculateTotal();

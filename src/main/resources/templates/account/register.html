@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<header th:replace="common/top"></header>
+<div id="Content">
+    <link href="../css/signOn.css?v=1.0.1" rel="stylesheet" type="text/css">
+<th:if test="${sessionScope.messageAccount !=null}">
+    <p style="text-align: center"><font color="red" th:text="${session.messageAccount}"></font> </p>
+</th:if>
+<div id="Catalog">
+    <form action="/account/register" method="post">
+        <h3>User Information</h3>
+        <table>
+            <tr>
+                <td>User ID:</td>
+                <td>
+                    <input type="text" name="username" id="username"  onblur="usernameIsExist();"/>
+                    <div id="usernameMsg"></div>
+                    <script type="text/javascript" src="../js/register.js?v=1.1"></script>
+                </td>
+            </tr>
+            <tr>
+                <td>New password:</td>
+                <td><input type="text" name="password" /></td>
+            </tr>
+            <tr>
+                <td>Repeat password:</td>
+                <td><input type="text" name="repeatedPassword" /></td>
+            </tr>
+            <tr>
+                <td> VerificationCode:</td>
+                <td>
+                <input maxlength="4" name="vCode" size="5" type="text"/>
+                <a href="/account/viewRegisterForm"><img border="0" name="checkcode" src="verification"></a>
+                </td>
+            </tr>
+        </table>
+        <h3 th:replace="account/includeAccountFields::accountTableH3"></h3></br>
+        <table th:replace="account/includeAccountFields::accountTable"></table>
+        <h3 th:replace="account/includeAccountFields::profileTableH3"></h3></br>
+        <table th:replace="account/includeAccountFields::profileTable"></table>
+        <a href="/account/viewLoginForm"><input type="submit" name="newAccount" value="Save Account Information" />
+        </a>
+    </form>
+</div>
+</div>
+<footer th:replace="common/bottom"></footer>
+<script type="text/javascript" src="../js/Verification.js"></script>
+</body>
+</html>

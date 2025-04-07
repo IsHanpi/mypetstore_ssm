@@ -2,13 +2,19 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Error</title>
-    <link rel="StyleSheet" href="../css/jpetstore.css" type="text/css" media="screen"/>
+    <title>error</title>
 </head>
 <body>
-<header th:replace="common/top"></header>
+<header th:replace="common/top.html"></header>
 <div id="Content">
-    <p style="color: red" th:text="${session.ErrorMessage}">Error Message</p>
+    <p style="color: red;" th:text="${session.ErrorMessage}">
+        ERROR MSG
+    </p>
+    <br>
+    <br>
+    <div>
+        <a href="/catalog/index" class="Button">Return to Main Menu</a>
+    </div>
 </div>
 <footer th:replace="common/bottom"></footer>
 </body>

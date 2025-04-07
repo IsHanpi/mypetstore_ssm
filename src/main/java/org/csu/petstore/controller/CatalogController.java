@@ -1,5 +1,6 @@
 package org.csu.petstore.controller;
 
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.csu.petstore.entity.Product;
 import org.csu.petstore.service.CatalogService;
@@ -23,10 +24,12 @@ public class CatalogController {
 
     @Autowired
     private CatalogService catalogService;
+    @Autowired
+    private HttpServletRequest request;
 
     @GetMapping("index")
     public String index() {
-        return "catalog/main.html";
+        return "catalog/main";
     }
 
     @GetMapping("viewCategory")
@@ -57,6 +60,7 @@ public class CatalogController {
         String result = JSON.toJSONString(productList);
         return result;
     }
+
     @PostMapping("searchProducts")
     public String searchProducts(String keyword, HttpSession session) {
         String url;
@@ -75,4 +79,7 @@ public class CatalogController {
         }
         return url;
     }
+
+    @PostMapping("mainForm")
+    public String mainForm() {return "catalog/main";}
 }

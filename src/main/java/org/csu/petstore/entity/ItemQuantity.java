@@ -8,11 +8,8 @@ import lombok.Data;
 @TableName("inventory")
 @Data
 public class ItemQuantity {
-
     @TableId("itemid")
     private String itemId;
-
     @TableField("qty")
     private Integer quantity;
-
 }

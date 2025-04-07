@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <script>
+        $(function () {
+            var v = document.getElementById("username").disabled = true;
+        })
+        function isCom(){
+            var text1= document.getElementById("password").value;
+            var text2= document.getElementById("repeatedPassword").value;
+            if (text2 === text1 && text1 !== null && text2 !== null){
+                document.getElementById("pwd2Span").innerHTML = "";
+                document.getElementById("submit").disabled = false;
+                return true;
+            }else {
+                document.getElementById("pwd2Span").innerHTML = "password doesn't equals to repeatPassword!(not null)";
+                document.getElementById("submit").disabled = true;
+                return false;
+            }
+        }
+    </script>
+</head>
+<body>
+<header th:replace="common/top"></header>
+</header>
+
+<div id="Content">
+    <div id="Catalog">
+        <form action="/account/confirmEdit" method="post">
+
+            <h3>User Information</h3>
+
+            <table>
+                <tr>
+                    <td>User ID:</td>
+                    <td th:text="${session.account.username}">
+                        username
+                    </td>
+                </tr>
+                <tr>
+                    <td>New password:</td>
+                    <td><input type="password" name="password" id="password" placeholder="Password" autofocus="autofocus" th:value="${session.account.password}" onblur="isCom()"/></td>
+                </tr>
+                <tr>
+                    <td>Repeat password:</td>
+                    <td><input type="password"  name="repeatedPassword" id="repeatedPassword" th:value="${session.account.password}" onblur="isCom()" /></td>
+                    <span id="pwd2Span" style="color: red;"></span>
+                </tr>
+            </table>
+
+            <h3 th:replace="account/includeAccountFields::accountTableH3"></h3></br>
+            <table th:replace="account/includeAccountFields::accountTable"></table>
+            <h3 th:replace="account/includeAccountFields::profileTableH3"></h3></br>
+            <table th:replace="account/includeAccountFields::profileTable"></table>
+
+            <input type="submit" id="submit" name="editAccount" value="Save Account Information" />
+        </form>
+    </div>
+</div>
+
+<footer th:replace="common/bottom"></footer>
+</body>
+</html>

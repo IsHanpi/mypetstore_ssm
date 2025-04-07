@@ -16,11 +16,13 @@ import org.csu.petstore.vo.CartItemVO;
 import org.csu.petstore.vo.CartVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+@Transactional
 @Service("cartService")
 public class CartServiceImpl implements CartService {
     @Autowired
@@ -36,6 +38,7 @@ public class CartServiceImpl implements CartService {
     private CartVO cart;
 
     //数据库中购物车商品
+    @Override
     public List<CartItemVO> getCartItems(String account) {
         List<CartItemVO> cartItems = new ArrayList<>();
         QueryWrapper<CartDBItem> wrapper = new QueryWrapper<>();
@@ -58,6 +61,7 @@ public class CartServiceImpl implements CartService {
     }
 
     //某商品是否在购物车中
+    @Override
     public boolean containsItemId(String account, String itemId) {
         QueryWrapper<CartDBItem> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("LoginAccount", account);
@@ -66,6 +70,7 @@ public class CartServiceImpl implements CartService {
     }
 
     //商品加入购物车时，原本没有则新建
+    @Override
     public void addItem(String account, Item item, boolean isInStock) {
         QueryWrapper<CartDBItem> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("LoginAccount", account);
@@ -137,12 +142,13 @@ public class CartServiceImpl implements CartService {
     }
 
     //移除购物车中商品
+    @Override
     public void removeItem(String account, String itemId) {
         CartItemVO cartItemVO = getCartItemFromCart(itemId);
         if (cartItemVO != null) {
             cart.getCartItems().remove(cartItemVO);
             deleteItem(account,itemId);
-            calculateTotal();
+            cart.setSubTotal(calculateTotal());
         }else {
             deleteItem(account,itemId);
             loadCartFromDB(account);
@@ -169,6 +175,7 @@ public class CartServiceImpl implements CartService {
     }
 
     //增加购物车中商品数量
+    @Override
     public void incrementQuantityByItemId(String account, String itemId) {
         CartItemVO cartItemVO = getCartItemFromCart(itemId);
         if (cartItemVO == null) {
@@ -178,9 +185,11 @@ public class CartServiceImpl implements CartService {
         addItemQuantity(account,itemId);
         cartItemVO.setQuantity(cartItemVO.getQuantity()+1);
         cartItemVO.setTotal(cartItemVO.getTotal().add(cartItemVO.getListPrice()));
+        cart.setSubTotal(cart.getSubTotal().add(cartItemVO.getListPrice()));
     }
 
     //设置商品数量
+    @Override
     public void setQuantityByItemId(String account, String itemId, int quantity) {
         updateItemQuantity(account,itemId,quantity);
         CartItemVO cartItemVO = getCartItemFromCart(itemId);
@@ -191,11 +200,13 @@ public class CartServiceImpl implements CartService {
     }
 
     //获取购物车中的商品列表
+    @Override
     public List<CartItemVO> getAllCartItems() {
         return cart.getCartItems();
     }
 
     //获取单个商品的总价
+    @Override
     public BigDecimal getTotal(String itemId) {
         BigDecimal total = BigDecimal.valueOf(0);
         List<CartItemVO> cartItemVOS = cart.getCartItems();
@@ -209,11 +220,13 @@ public class CartServiceImpl implements CartService {
     }
 
     //所有商品的总价
+    @Override
     public BigDecimal getSubTotal() {
         return cart.getSubTotal();
     }
 
     //用户购物车商品
+    @Override
     public List<Item> getItemList(String account){
         QueryWrapper<CartDBItem> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("LoginAccount",account);
@@ -228,6 +241,7 @@ public class CartServiceImpl implements CartService {
     }
 
     //清空购物车商品
+    @Override
     public void deleteAllCartItems(String account) {
         QueryWrapper<CartDBItem> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("LoginAccount",account);
@@ -235,6 +249,7 @@ public class CartServiceImpl implements CartService {
     }
 
     //添加商品数量
+    @Override
     public void addItemQuantity(String account, String itemId) {
         QueryWrapper<CartDBItem> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("LoginAccount",account);
@@ -250,6 +265,7 @@ public class CartServiceImpl implements CartService {
     }
 
     //减少商品数量
+    @Override
     public void decreaseItemQuantity(String account, String itemId) {
         QueryWrapper<CartDBItem> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("LoginAccount",account);
@@ -265,6 +281,7 @@ public class CartServiceImpl implements CartService {
     }
 
     //更新数据库商品数量
+    @Override
     public void updateItemQuantity(String account, String itemId, int number) {
         QueryWrapper<CartDBItem> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("LoginAccount",account);
@@ -280,12 +297,14 @@ public class CartServiceImpl implements CartService {
     }
 
     //创建商品
+    @Override
     public void createItem(String account, String itemId, int quantity) {
         CartDBItem cartDBItem = new CartDBItem(account, itemId, quantity);
         cartMapper.insert(cartDBItem);
     }
 
     //删除商品
+    @Override
     public void deleteItem(String account, String itemId) {
         QueryWrapper<CartDBItem> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("LoginAccount",account);
@@ -294,6 +313,7 @@ public class CartServiceImpl implements CartService {
     }
 
     //获取商品数量
+    @Override
     public int getItemQuantity(String account, String itemId) {
         QueryWrapper<CartDBItem> queryWrapper = new QueryWrapper<>();
         queryWrapper.eq("LoginAccount",account);

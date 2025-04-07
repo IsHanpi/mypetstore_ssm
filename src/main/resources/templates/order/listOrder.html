@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>listOrder</title>
+    <link href="../css/jpetstore.css" media="screen" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../js/jquery.js"></script>
+</head>
+<body>
+<header th:replace="common/top"></header>
+<div id="Content">
+    <h2>My Orders</h2>
+    <table>
+    <tr>
+        <th>Order ID</th>
+        <th>Date</th>
+        <th>Total Price</th>
+        <th>Status</th>
+    </tr>
+        <tr th:each="order:${orderList}">
+            <td>
+                <a th:href="@{/order/checkOrder?orderId=}+${order.orderId}" th:text="${order.orderId}">orderId</a>
+            </td>
+            <td th:text="${#dates.format(order.orderDate, 'yyyy-MM-dd HH:mm')}">
+            </td>
+            <td th:text="'$'+${#numbers.formatDecimal(order.totalPrice,1,2)}">
+            </td>
+            <td th:text="${order.status}">status</td>
+        </tr>
+</table>
+</div>
+<footer th:replace="common/bottom"></footer>
+</body>
+</html>

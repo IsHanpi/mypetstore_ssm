@@ -2,8 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
-    <link rel="StyleSheet" href="../css/jpetstore.css" type="text/css" media="screen"/>
+    <title>MyPetstore</title>
+    <link href="../css/jpetstore.css?v=1.0" media="screen" rel="StyleSheet" type="text/css"/>
+    <script type="text/javascript" src="../js/jquery.js"></script>
+    <link rel="StyleSheet" href="../css/mouseEventInform.css" type="text/css"
+          media="screen"/>
+    <link rel="StyleSheet" href="../css/goodsShow.css?v=1.0" type="text/css"
+          media="screen">
 </head>
 <body>
 <header th:fragment="header">
@@ -13,30 +18,39 @@
                 <a href="/catalog/index"><img src="../images/logo-topbar.gif" /></a>
             </div>
         </div>
-
         <div id="Menu">
             <div id="MenuContent">
                 <a href="/cart/viewCart"><img align="middle" name="img_cart" src="../images/cart.gif" /></a>
                 <img align="middle" src="../images/separator.gif" />
-                <a th:if="${session.account} == null" href="/account/signonForm">Sign In</a>
-                <a th:if="(${session.account} != null) and (${!session.authenticated}) " href="/account/signonForm">Sign In</a>
-                <a th:if="(${session.account} != null) and (${session.authenticated})" href="/account/signoff">Sign Out</a>
-                <img th:if="(${session.account} != null) and (${session.authenticated})" align="middle" src="../images/separator.gif" />
-                <a th:if="(${session.account} != null) and (${session.authenticated})" href="/account/editAccountForm">My Account</a>
-                <img align="middle" src="../images/separator.gif" />
+                <a href="/account/viewLoginForm" th:if="${session.account==null}" text="login">
+                    Sign In
+                </a>
+
+                <a href="/account/signOut" th:if="${session.account!=null}" text="signOut">
+                    Sign Out
+                </a>
+                <img align="middle" src="../images/separator.gif" th:if="${session.account!=null}"/>
+                <a href="/account/editAccount" th:if="${session.account!=null}" text="myAccount">
+                    My Account
+                </a>
+                <img align="middle" src="../images/separator.gif" th:if="${session.account!=null}"/>
+                <a href="/order/listOrder" th:if="${session.account != null}">My Orders</a>
+                <img align="middle" src="../images/separator.gif"/>
                 <a href="../help.html">?</a>
             </div>
         </div>
-
         <div id="Search">
             <div id="SearchContent">
                 <form action="/catalog/searchProducts" method="post">
-                    <input type="text" name="keyword" size="14" />
+                    <input type="text" id="keyword" name="keyword" size="14" />
                     <input type="submit" name="searchProducts" value="Search"/>
                 </form>
+                <div id="productAutoComplete">
+                    <ul id="productAutoList">
+                    </ul>
+                </div>
             </div>
         </div>
-
         <div id="QuickLinks">
             <a href="/catalog/viewCategory?categoryId=FISH"><img src="../images/sm_fish.gif" /></a>
             <img src="../images/separator.gif" />

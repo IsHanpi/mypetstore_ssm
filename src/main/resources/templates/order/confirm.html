@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>confirm</title>
+    <link href="../css/jpetstore.css" media="screen" rel="stylesheet" type="text/css">
+    <script type="text/javascript" src="../js/jquery.js"></script>
+</head>
+<body>
+<header th:replace="common/top.html"></header>
+<div id="BackLink">
+    <a href="/catalog/index">
+        Return to Main Menu
+    </a>
+</div>
+<div id="Content">
+<div id="Catalog">Please confirm the information below and then
+    press continue...
+    <table>
+        <tr>
+            <th align="center" colspan="2"><font size="4"><b>Order</b></font>
+                <br />
+                <font size="3"><b><span th:text="${#dates.format(session.order.orderDate, 'yyyy/MM/dd hh:mm:ss')}">date</span>
+                </b></font>
+            </th>
+        </tr>
+        <tr>
+            <th colspan="2">Billing Address</th>
+        </tr>
+        <tr>
+            <td>First name:</td>
+            <td th:text="${session.order.billToFirstName}">billToFirstName</td>
+        </tr>
+        <tr>
+            <td>Last name:</td>
+            <td th:text="${session.order.billToLastName}">billToLastName</td>
+        </tr>
+        <tr>
+            <td>Address 1:</td>
+            <td th:text="${session.order.billAddress1}">billAddress1</td>
+        </tr>
+        <tr>
+            <td>Address 2:</td>
+            <td th:text="${session.order.billAddress2}" >billAddress2</td>
+        </tr>
+        <tr>
+            <td>City:</td>
+            <td th:text="${session.order.billCity}">billCity</td>
+        </tr>
+        <tr>
+            <td>State:</td>
+            <td th:text="${session.order.billState}">billState</td>
+        </tr>
+        <tr>
+            <td>Zip:</td>
+            <td th:text="${session.order.billZip}">billZip</td>
+        </tr>
+        <tr>
+            <td>Country:</td>
+            <td th:text="${session.order.billCountry}">billCountry</td>
+        </tr>
+        <tr>
+            <th colspan="2">Shipping Address</th>
+        </tr>
+        <tr>
+            <td>First name:</td>
+            <td th:text="${session.order.shipToFirstName}">shipToFirstName</td>
+        </tr>
+        <tr>
+            <td>Last name:</td>
+            <td th:text="${session.order.shipToLastName}">shipToLastName</td>
+        </tr>
+        <tr>
+            <td>Address 1:</td>
+            <td th:text="${session.order.shipAddress1}">shipAddress1</td>
+        </tr>
+        <tr>
+            <td>Address 2:</td>
+            <td th:text="${session.order.shipAddress2}">shipAddress2</td>
+        </tr>
+        <tr>
+            <td>City:</td>
+            <td th:text="${session.order.shipCity}">shipCity</td>
+        </tr>
+        <tr>
+            <td>State:</td>
+            <td th:text="${session.order.shipState}">shipState</td>
+        </tr>
+        <tr>
+            <td>Zip:</td>
+            <td th:text="${session.order.shipZip}">shipZip</td>
+        </tr>
+        <tr>
+            <td>Country:</td>
+            <td th:text="${session.order.shipCountry}">shipCountry</td>
+        </tr>
+    </table>
+    <a href="/order/viewOrder" class="Button">Confirm</a>
+</div>
+</div>
+<footer th:replace="common/bottom"></footer>
+</body>
+</html>

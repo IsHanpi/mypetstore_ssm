@@ -2,18 +2,13 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 
 </head>
-
 <body>
 <header th:replace="common/top"></header>
-
-
 <link href="../css/signOn.css?v=1.0.1" rel="stylesheet" type="text/css">
 <div id="Content">
 <form action="/account/signon" class="box" method="post">
     <p>Please enter your username and password.</p>
-
     <p><font color="red" th:if="${signOnMsg !=null}" th:text="${signOnMsg}"> signOnMsg</font></p>
-
     <p>
         <input name="username" placeholder="Username" id="username" type="text"/>
         <input name="password" placeholder="Password" id="password" type="password"/>

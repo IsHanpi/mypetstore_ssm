@@ -15,9 +15,11 @@ import org.csu.petstore.vo.ItemVO;
 import org.csu.petstore.vo.ProductVO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+@Transactional
 @Service("catalogService")
 public class CatalogServiceImpl implements CatalogService {
 
@@ -43,6 +45,14 @@ public class CatalogServiceImpl implements CatalogService {
         queryWrapper.eq("category", categoryId);
         List<Product> productList = productMapper.selectList(queryWrapper);
 
+        if(!productList.isEmpty()){
+            for (Product product : productList) {
+                String productId = product.getProductId();
+                productId = productId.substring(0,12) + "../" + productId.substring(12);
+                product.setDescription(productId);
+            }
+        }
+
         categoryVO.setCategoryId(categoryId);
         categoryVO.setCategoryName(category.getName());
         categoryVO.setProductList(productList);
@@ -64,6 +74,10 @@ public class CatalogServiceImpl implements CatalogService {
         productVO.setCategoryId(product.getCategoryId());
         productVO.setProductName(product.getName());
         productVO.setItemList(itemList);
+
+        String productId1 = product.getProductId();
+        productId1 = productId1.substring(0,12) + "../" + productId.substring(12);
+        product.setDescription(productId1);
 
         return productVO;
     }
@@ -102,4 +116,15 @@ public class CatalogServiceImpl implements CatalogService {
         return productList;
     }
 
+    @Override
+    public List<Product> getProductList(String categoryId) {
+        QueryWrapper<Product> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq("category", categoryId);
+        List<Product> productList = productMapper.selectList(queryWrapper);
+        for (Product product : productList) {
+            String sub1 = product.getDescription().substring(0,12);
+            product.setDescription(sub1 + "../"+product.getDescription().substring(12));
+        }
+        return productList;
+    }
 }

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>cart</title>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../js/jquery.js"></script>
+</head>
+<body>
+<header th:replace="common/top.html"></header>
+<div id="Content">
+<div id="BackLink">
+    <a href="/catalog/index">Return to Main Menu</a>
+</div>
+<div id="Catalog">
+    <div id="Cart">
+        <img alt="cart" id="cartImg" src="../images/cartLogo.png">
+        <form>
+            <table class="cartTable">
+                <tr>
+                    <th class="cartTh"><b>ItemID</b></th>
+                    <th class="cartTh"><b>Image</b></th>
+                    <th class="cartTh"><b>Name</b></th>
+                    <th class="cartTh"><b>List Price</b></th>
+                    <th class="cartTh"><b>Quantity</b></th>
+                    <th class="cartTh"><b>Total Cost</b></th>
+                    <th class="cartTh">Action</th>
+                </tr>
+                <tr th:if="${session.cart.numberOfItems  == 0}">
+                    <td colspan="7"><b>Your cart is empty.</b></td>
+                </tr>
+                <tr th:each="cartItem:${session.cart.cartItems}">
+                    <td class="itemTd">
+                        <a th:href="'/catalog/viewItem?itemId='+${cartItem.itemId}" th:text="${cartItem.itemId}">Item
+                            ID</a>
+                    </td>
+                    <td class="itemTd" th:utext="${cartItem.proDescription}">
+                    </td>
+                    <td class="itemTd" th:utext="${cartItem.proName}">
+                        name
+                    </td>
+                    <td class="itemTd" th:text="'$'+${#numbers.formatDecimal(cartItem.listPrice,1,2)}">
+                    </td>
+                    <td class="itemTd">
+                        <input class="cartItem" th:id="${cartItem.itemId}" th:name="${cartItem.itemId}"
+                               th:value="${cartItem.quantity}" type="text">
+                    </td>
+                    <td class="itemTd" th:id="${cartItem.itemId}+'totalCost'" th:text="'$'+${#numbers.formatDecimal(cartItem.total,1,2)}">
+                        total
+                    </td>
+                    <td class="itemTd">
+                        <a class="Button" th:href="'/cart/removeItem?workingItemId=' + ${cartItem.itemId}">Remove</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td colspan="6">Sub Total:
+                        <label id="subTotalCost" th:text="'$'+${#numbers.formatDecimal(session.cart.subTotal,1,2)}">
+                        </label>
+                    </td>
+                    <td style="align-content: center"><a class="Button" href="#">Refresh</a></td>
+                </tr>
+            </table>
+        </form>
+        <a class="Button" href="/order/newOrder" th:if="${session.cart.numberOfItems  > 0}">Proceed to Checkout</a>
+    </div>
+    <div id="MyList">
+        <div th:if="${session.account != null && session.myList != null && session.account.listOption != null} ">
+            <p>Pet Favorites <br/>
+                Shop for more of your favorite pets here.</p>
+            <div class="myListBox">s
+                <div class="myListItemBox" th:each="product:${session.myList}">
+                    <a th:href="@{/catalog/viewProduct?productId=}+${product.productId}"
+                       th:text="${product.description}">
+                        pic
+                        <span th:text="${product.name}">name</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+<div id="Separator">&nbsp;</div>
+</div>
+</div>
+<footer th:replace="common/bottom"></footer>
+</body>
+</html>

@@ -7,12 +7,14 @@ import java.math.BigDecimal;
 import java.util.List;
 
 public interface CartService {
-    public boolean containsItemId(String account,String itemId);
+    public List<CartItemVO> getCartItems(String account);
+    public boolean containsItemId(String account, String itemId);
     public void addItem(String account,Item item,boolean isInStock);
     public void removeItem(String account,String itemId);
     public void incrementQuantityByItemId(String account,String itemId);
     public void setQuantityByItemId(String account,String itemId,int quantity);
     public List<CartItemVO> getAllCartItems();
+    public BigDecimal getTotal(String itemId);
     public BigDecimal getSubTotal();
     public void addItemQuantity(String account,String itemId);
     public void decreaseItemQuantity(String account,String itemId);
